@@ -1,0 +1,11 @@
+Model Information:
+* title:	Wood Crate
+* source:	https://sketchfab.com/3d-models/wood-crate-d331f79189704cd49ba013752f2b8d80
+* author:	Pedro Silva (https://sketchfab.com/pxdrosilva)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Wood Crate" (https://sketchfab.com/3d-models/wood-crate-d331f79189704cd49ba013752f2b8d80) by Pedro Silva (https://sketchfab.com/pxdrosilva) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

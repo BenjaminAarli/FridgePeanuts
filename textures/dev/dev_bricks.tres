@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ddby24n1k6135"]
+
+[ext_resource type="Texture2D" uid="uid://cmqoibtegeqpj" path="res://TrenchBroom/defaults/assets/textures/dev/dev_bricks.png" id="1_ahrg0"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+specular_mode = 2
+albedo_texture = ExtResource("1_ahrg0")
+metallic_specular = 0.0
+texture_filter = 2

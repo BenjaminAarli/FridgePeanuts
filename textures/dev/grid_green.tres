@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bbl75y3l0ig1p"]
+
+[ext_resource type="Texture2D" uid="uid://6p8smshtdg0a" path="res://TrenchBroom/defaults/assets/textures/dev/grid_green.png" id="1_2kaoq"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+specular_mode = 2
+albedo_texture = ExtResource("1_2kaoq")
+metallic_specular = 0.0
+texture_filter = 2

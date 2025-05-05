@@ -1,0 +1,11 @@
+Model Information:
+* title:	Warehouse Crates
+* source:	https://sketchfab.com/3d-models/warehouse-crates-afdc5b74ec474eefaf4a6ca50007bfa7
+* author:	Silver Phoenix (https://sketchfab.com/UniBlend)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Warehouse Crates" (https://sketchfab.com/3d-models/warehouse-crates-afdc5b74ec474eefaf4a6ca50007bfa7) by Silver Phoenix (https://sketchfab.com/UniBlend) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

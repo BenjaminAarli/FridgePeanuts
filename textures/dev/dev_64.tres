@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dboepl2s6f21w"]
+
+[ext_resource type="Texture2D" uid="uid://d2o4f8rgiku6t" path="res://TrenchBroom/defaults/assets/textures/dev/dev_64.png" id="1_q37uq"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+specular_mode = 2
+albedo_texture = ExtResource("1_q37uq")
+metallic_specular = 0.0
+texture_filter = 2

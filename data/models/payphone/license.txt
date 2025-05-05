@@ -1,0 +1,11 @@
+Model Information:
+* title:	Payphone
+* source:	https://sketchfab.com/3d-models/payphone-f5ba356c10624413ac881513175adbfd
+* author:	nika.tendetnik (https://sketchfab.com/n.tendetnik)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Payphone" (https://sketchfab.com/3d-models/payphone-f5ba356c10624413ac881513175adbfd) by nika.tendetnik (https://sketchfab.com/n.tendetnik) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
