@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bpbq0ogsw44nf"
+path="res://.godot/imported/Roc Boyz - Bonanza feat. Greekazo.mp3-1ec96bbcf180cafc6d87fbac92ecb9d0.mp3str"
+
+[deps]
+
+source_file="res://data/audio/music/Roc Boyz - Bonanza feat. Greekazo.mp3"
+dest_files=["res://.godot/imported/Roc Boyz - Bonanza feat. Greekazo.mp3-1ec96bbcf180cafc6d87fbac92ecb9d0.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
