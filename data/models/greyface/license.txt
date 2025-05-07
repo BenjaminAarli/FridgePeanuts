@@ -1,0 +1,11 @@
+Model Information:
+* title:	Greyface
+* source:	https://sketchfab.com/3d-models/greyface-19902070311f46dbbb9335a5d26b0a7b
+* author:	ryanwheeler7321 (https://sketchfab.com/ryanwheeler7321)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Greyface" (https://sketchfab.com/3d-models/greyface-19902070311f46dbbb9335a5d26b0a7b) by ryanwheeler7321 (https://sketchfab.com/ryanwheeler7321) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
