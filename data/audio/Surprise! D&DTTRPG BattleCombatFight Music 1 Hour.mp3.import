@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d0ou0cp82rg12"
+path="res://.godot/imported/Surprise! D&DTTRPG BattleCombatFight Music 1 Hour.mp3-5bdab53d16d3e07a9a31566983450c9b.mp3str"
+
+[deps]
+
+source_file="res://data/audio/Surprise! D&DTTRPG BattleCombatFight Music 1 Hour.mp3"
+dest_files=["res://.godot/imported/Surprise! D&DTTRPG BattleCombatFight Music 1 Hour.mp3-5bdab53d16d3e07a9a31566983450c9b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
