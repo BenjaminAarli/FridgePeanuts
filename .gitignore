@@ -3,7 +3,6 @@
 /android/
 .import/
 
-*.cfg
 export.cfg
 export_presets.cfg
 
