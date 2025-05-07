@@ -1,0 +1,17 @@
+Game TODO
+
+Need to add
+* A jar of peanuts (with inventory or something)
+* A censored sausage with bun (Sausage)
+* A Pineapple Pizza (with build-a-pizza inventory system or something I dun't konw)
+
+* Bucket (for milking cow) - Find in basement somehow.
+* Axe (for breaking in-case-of-emergency-glass) - Find at neighbor.
+
+* Easter Egg: Aliens take cow.
+* Pigman in prison escape (Alternative ending)
+* Pizza Ingredient: Bottom - Get from neighbors pizza somehow. 
+* Pizza Ingredient: Sauce  - Pick from apple tree gets "tomato?"
+* Pizza Ingredient: Cheese - Milk the bull, get the "cheese".
+* Pizza Ingredient: Pineapple - It's behind a "Break incase of emergency"
+* Pizza Ingredient: Ham - Kill the pigman, get his flesh. 

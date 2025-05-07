@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://mhaqlg6sfxo5"
+path="res://.godot/imported/pigman.dialogue-8386cd25ff71a789b96164252f88bc76.tres"
+
+[deps]
+
+source_file="res://pigman.dialogue"
+dest_files=["res://.godot/imported/pigman.dialogue-8386cd25ff71a789b96164252f88bc76.tres"]
+
+[params]
+
+defaults=true

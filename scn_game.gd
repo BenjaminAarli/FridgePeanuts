@@ -1,10 +1,19 @@
 extends Node3D
 
+@export var dev_mode : bool = false: 
+	set(value):
+		Global.dev_mode = value
+		dev_mode = value
+
 @onready var music_bg = $BGMusic
 
 @onready var pizza_van = %animated_van
 @onready var pizza_van_anim = $animated_van/AnimationPlayer
 @onready var pizza_van_music = %PizzaVanMusic
+
+func _ready() -> void:
+	pizza_van.hide()
+	pass
 
 func call_for_pizza():
 	pizza_van.show()
@@ -17,7 +26,7 @@ func call_for_pizza():
 	pass
 
 func _on_node_3d_start_game() -> void:
-	music_bg.play()
+	if not Global.dev_mode: music_bg.play()
 	$Control.show()
 	pass
 

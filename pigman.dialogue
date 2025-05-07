@@ -1,0 +1,11 @@
+~ start
+Pigman: [[Greetings|Salutations|Welcome]], stranger.
+Pigman: What do you inquire? 
+- I need meat.
+	Nathan: You picked the first one.
+- I need other ingredients.
+	Nathan: You picked the second one.
+- Start again => start
+- Nothing. Bye. => END
+Pigman: [[Farewell Then|Adieu|Bye Bye]]
+=> END
