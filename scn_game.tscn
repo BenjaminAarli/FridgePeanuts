@@ -4332,7 +4332,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.243774, 1.27614, 0.82708)
 shape = SubResource("BoxShape3D_8re8r")
 
 [node name="Cow" type="Node3D" parent="."]
-transform = Transform3D(0.138257, 0, 0.990396, 0, 1, 0, -0.990396, 0, 0.138257, 40, 2.76516, -44.0861)
+transform = Transform3D(0.138257, 0, 0.990396, 0, 1, 0, -0.990396, 0, 0.138257, 39.5932, 2.76516, -44.0861)
 script = SubResource("GDScript_8re8r")
 
 [node name="cow" type="Node3D" parent="Cow"]
