@@ -2,9 +2,11 @@
 Pigman: [[Greetings|Salutations|Welcome]], stranger.
 Pigman: What do you inquire? 
 - I need meat.
-	Nathan: You picked the first one.
+	Pigman: I can serve you meat once you get me out of here.
+- I found this in the trash [if Global.has_meat]
+	Pigman: Perfect! That will work as meat.
 - I need other ingredients.
-	Nathan: You picked the second one.
+	Pigman: ...and I need some sunscreen and a bikini but we are both out of luck now. Aren't we?
 - Start again => start
 - Nothing. Bye. => END
 Pigman: [[Farewell Then|Adieu|Bye Bye]]

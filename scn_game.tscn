@@ -1,4 +1,4 @@
-[gd_scene load_steps=161 format=4 uid="uid://c83apy1top3qa"]
+[gd_scene load_steps=165 format=4 uid="uid://c83apy1top3qa"]
 
 [ext_resource type="Script" uid="uid://dvcsadyhxblnv" path="res://scn_game.gd" id="1_2kqm4"]
 [ext_resource type="PackedScene" uid="uid://cudfd5mpxmb5j" path="res://data/models/european_delivery_van/animated_van.glb" id="2_3rm0j"]
@@ -33,6 +33,8 @@
 [ext_resource type="PackedScene" uid="uid://bbh42dmblxa7p" path="res://data/models/payphone/scene.gltf" id="32_4vwqg"]
 [ext_resource type="PackedScene" uid="uid://ce6si1mnc6ldi" path="res://data/models/pig_demon/scene.gltf" id="33_ih4yj"]
 [ext_resource type="Texture2D" uid="uid://b34whn7n18j4j" path="res://data/models/cow_bull_01_baseColor.png" id="33_jp8vd"]
+[ext_resource type="Script" uid="uid://8ml17likhn35" path="res://data/nodes/PlayerInteractArea.gd" id="34_8re8r"]
+[ext_resource type="PackedScene" uid="uid://cbngwwhj4y4yr" path="res://data/models/insectoid_monster_rig/scene.gltf" id="35_we68e"]
 
 [sub_resource type="Environment" id="Environment_8h2c3"]
 fog_enabled = true
@@ -595,31 +597,25 @@ script/source = "extends Node3D
 
 @onready var anim = $Sketchfab_Scene/AnimationPlayer
 
-var inside = false
-
 func _ready() -> void:
 	anim.play(\"Take 001\")
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		if Input.is_action_just_pressed(\"ui_accept\"):
-			DialogueManager.show_example_dialogue_balloon(load(\"res://pigman.dialogue\"))
-			pass
+var dialogue_scene: Node = null
 
-func _on_area_3d_body_entered(body: Node3D) -> void:
-	if body.is_in_group(\"Player\"):
-		inside = true
-	pass # Replace with function body.
+func _on_area_3d_interaction_activated() -> void:
+	dialogue_scene = DialogueManager.show_example_dialogue_balloon(load(\"res://pigman.dialogue\"))
+	pass
 
-
-func _on_area_3d_body_exited(body: Node3D) -> void:
-	if body.is_in_group(\"Player\"):
-		inside = false
-	pass # Replace with function body.
+func _on_area_3d_interaction_player_left_area() -> void:
+	if dialogue_scene != null:
+		dialogue_scene.queue_free()
+		await dialogue_scene.tree_exiting
+		dialogue_scene = null
+	pass
 "
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ih4yj"]
-size = Vector3(2.34705, 3.48425, 3.02393)
+[sub_resource type="BoxShape3D" id="BoxShape3D_8re8r"]
+size = Vector3(3.27563, 2.42813, 2.65417)
 
 [sub_resource type="GDScript" id="GDScript_8re8r"]
 script/source = "extends Node3D
@@ -791,473 +787,6 @@ bind/39/pose = Transform3D(-3.82023e-05, -99.8885, -4.72126, -0.000410355, 4.721
 bind/40/name = &"Bip01 TailNub_039"
 bind/40/bone = -1
 bind/40/pose = Transform3D(100, -1.20802e-05, -8.37776e-06, 1.55914e-05, 100, -2.16068e-05, -3.56404e-06, 4.47032e-06, 100, 1.78035e-07, 1.49012e-07, 1.19209e-07)
-
-[sub_resource type="Animation" id="Animation_1wtdv"]
-resource_name = "eating"
-length = 3.75
-loop_mode = 1
-tracks/0/type = "position_3d"
-tracks/0/imported = true
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01_02")
-tracks/0/interp = 0
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 3.33285e-09, 1.01155, -0.640777)
-tracks/1/type = "rotation_3d"
-tracks/1/imported = true
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01_02")
-tracks/1/interp = 0
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, -0.466832, -0.466831, -0.531101, 0.531101)
-tracks/2/type = "position_3d"
-tracks/2/imported = true
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Pelvis_03")
-tracks/2/interp = 0
-tracks/2/loop_wrap = true
-tracks/2/keys = PackedFloat32Array(0, 1, -6.49048e-08, 4.93383e-13, -1.78809e-07)
-tracks/3/type = "rotation_3d"
-tracks/3/imported = true
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Pelvis_03")
-tracks/3/interp = 0
-tracks/3/loop_wrap = true
-tracks/3/keys = PackedFloat32Array(0, 1, -0.525262, -0.473392, -0.525262, 0.473392)
-tracks/4/type = "position_3d"
-tracks/4/imported = true
-tracks/4/enabled = true
-tracks/4/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Spine_04")
-tracks/4/interp = 0
-tracks/4/loop_wrap = true
-tracks/4/keys = PackedFloat32Array(0, 1, 0.0301988, 0.0957261, 0.0099709)
-tracks/5/type = "rotation_3d"
-tracks/5/imported = true
-tracks/5/enabled = true
-tracks/5/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Spine_04")
-tracks/5/interp = 0
-tracks/5/loop_wrap = true
-tracks/5/keys = PackedFloat32Array(0, 1, 0.0128067, -0.0193058, 0.745968, 0.665578)
-tracks/6/type = "position_3d"
-tracks/6/imported = true
-tracks/6/enabled = true
-tracks/6/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Thigh_05")
-tracks/6/interp = 0
-tracks/6/loop_wrap = true
-tracks/6/keys = PackedFloat32Array(0, 1, -0.0843066, 0.0389379, 0.166643)
-tracks/7/type = "rotation_3d"
-tracks/7/imported = true
-tracks/7/enabled = true
-tracks/7/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Thigh_05")
-tracks/7/interp = 0
-tracks/7/loop_wrap = true
-tracks/7/keys = PackedFloat32Array(0, 1, 0.838859, 0.543568, 0.024445, 0.0158661)
-tracks/8/type = "rotation_3d"
-tracks/8/imported = true
-tracks/8/enabled = true
-tracks/8/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Calf_06")
-tracks/8/interp = 0
-tracks/8/loop_wrap = true
-tracks/8/keys = PackedFloat32Array(0, 1, 6.50344e-09, 5.51768e-08, -0.280346, 0.959899)
-tracks/9/type = "rotation_3d"
-tracks/9/imported = true
-tracks/9/enabled = true
-tracks/9/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L HorseLink_07")
-tracks/9/interp = 0
-tracks/9/loop_wrap = true
-tracks/9/keys = PackedFloat32Array(0, 1, -1.68629e-08, 4.74602e-08, 0.0527138, 0.99861)
-tracks/10/type = "rotation_3d"
-tracks/10/imported = true
-tracks/10/enabled = true
-tracks/10/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Foot_08")
-tracks/10/interp = 0
-tracks/10/loop_wrap = true
-tracks/10/keys = PackedFloat32Array(0, 1, -1.16871e-08, -2.55213e-08, 0.0782382, 0.996935)
-tracks/11/type = "position_3d"
-tracks/11/imported = true
-tracks/11/enabled = true
-tracks/11/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Toe0_09")
-tracks/11/interp = 0
-tracks/11/loop_wrap = true
-tracks/11/keys = PackedFloat32Array(0, 1, 0.0831771, 0.107046, 5.19282e-08)
-tracks/12/type = "rotation_3d"
-tracks/12/imported = true
-tracks/12/enabled = true
-tracks/12/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Toe0_09")
-tracks/12/interp = 0
-tracks/12/loop_wrap = true
-tracks/12/keys = PackedFloat32Array(0, 1, 1.27186e-07, -1.81839e-07, 0.707107, 0.707107)
-tracks/13/type = "position_3d"
-tracks/13/imported = true
-tracks/13/enabled = true
-tracks/13/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Toe0Nub_010")
-tracks/13/interp = 0
-tracks/13/loop_wrap = true
-tracks/13/keys = PackedFloat32Array(0, 1, 0.0137052, -1.67823e-09, -2.00915e-08)
-tracks/14/type = "rotation_3d"
-tracks/14/imported = true
-tracks/14/enabled = true
-tracks/14/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Toe0Nub_010")
-tracks/14/interp = 0
-tracks/14/loop_wrap = true
-tracks/14/keys = PackedFloat32Array(0, 1, 5.74e-08, -4.51988e-10, -1, 7.57258e-09)
-tracks/15/type = "scale_3d"
-tracks/15/imported = true
-tracks/15/enabled = true
-tracks/15/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Toe0Nub_010")
-tracks/15/interp = 0
-tracks/15/loop_wrap = true
-tracks/15/keys = PackedFloat32Array(0, 1, -1, -1, -1)
-tracks/16/type = "position_3d"
-tracks/16/imported = true
-tracks/16/enabled = true
-tracks/16/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Thigh_011")
-tracks/16/interp = 0
-tracks/16/loop_wrap = true
-tracks/16/keys = PackedFloat32Array(0, 1, -0.0997384, 0.0429861, -0.177387)
-tracks/17/type = "rotation_3d"
-tracks/17/imported = true
-tracks/17/enabled = true
-tracks/17/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Thigh_011")
-tracks/17/interp = 0
-tracks/17/loop_wrap = true
-tracks/17/keys = PackedFloat32Array(0, 1, 0.838859, 0.543568, 0.024445, 0.0158661)
-tracks/18/type = "rotation_3d"
-tracks/18/imported = true
-tracks/18/enabled = true
-tracks/18/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Calf_012")
-tracks/18/interp = 0
-tracks/18/loop_wrap = true
-tracks/18/keys = PackedFloat32Array(0, 1, -5.25883e-09, -1.19111e-07, -0.280346, 0.959899)
-tracks/19/type = "rotation_3d"
-tracks/19/imported = true
-tracks/19/enabled = true
-tracks/19/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R HorseLink_013")
-tracks/19/interp = 0
-tracks/19/loop_wrap = true
-tracks/19/keys = PackedFloat32Array(0, 1, -1.32564e-08, 8.65735e-08, 0.0527131, 0.99861)
-tracks/20/type = "rotation_3d"
-tracks/20/imported = true
-tracks/20/enabled = true
-tracks/20/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Foot_014")
-tracks/20/interp = 0
-tracks/20/loop_wrap = true
-tracks/20/keys = PackedFloat32Array(0, 1, -4.91734e-08, 8.84262e-08, 0.0782374, 0.996935)
-tracks/21/type = "position_3d"
-tracks/21/imported = true
-tracks/21/enabled = true
-tracks/21/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Toe0_015")
-tracks/21/interp = 0
-tracks/21/loop_wrap = true
-tracks/21/keys = PackedFloat32Array(0, 1, 0.0831769, 0.107045, 2.20302e-08)
-tracks/22/type = "rotation_3d"
-tracks/22/imported = true
-tracks/22/enabled = true
-tracks/22/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Toe0_015")
-tracks/22/interp = 0
-tracks/22/loop_wrap = true
-tracks/22/keys = PackedFloat32Array(0, 1, 1.38037e-07, -1.88378e-07, 0.707107, 0.707107)
-tracks/23/type = "position_3d"
-tracks/23/imported = true
-tracks/23/enabled = true
-tracks/23/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Toe0Nub_016")
-tracks/23/interp = 0
-tracks/23/loop_wrap = true
-tracks/23/keys = PackedFloat32Array(0, 1, 0.0137054, -1.74687e-07, 5.03732e-09)
-tracks/24/type = "position_3d"
-tracks/24/imported = true
-tracks/24/enabled = true
-tracks/24/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Spine1_017")
-tracks/24/interp = 0
-tracks/24/loop_wrap = true
-tracks/24/keys = PackedFloat32Array(0, 1, 0.312942, -0.000249156, -1.47582e-08)
-tracks/25/type = "rotation_3d"
-tracks/25/imported = true
-tracks/25/enabled = true
-tracks/25/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Spine1_017")
-tracks/25/interp = 0
-tracks/25/loop_wrap = true
-tracks/25/keys = PackedFloat32Array(0, 1, -2.21741e-05, -0.0278534, -1.30069e-07, 0.999612)
-tracks/26/type = "position_3d"
-tracks/26/imported = true
-tracks/26/enabled = true
-tracks/26/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Spine2_018")
-tracks/26/interp = 0
-tracks/26/loop_wrap = true
-tracks/26/keys = PackedFloat32Array(0, 1, 0.31294, -0.000249168, -1.12003e-07)
-tracks/27/type = "rotation_3d"
-tracks/27/imported = true
-tracks/27/enabled = true
-tracks/27/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Spine2_018")
-tracks/27/interp = 0
-tracks/27/loop_wrap = true
-tracks/27/keys = PackedFloat32Array(0, 1, 0.000182926, -0.0278543, -0.00716236, 0.999586)
-tracks/28/type = "position_3d"
-tracks/28/imported = true
-tracks/28/enabled = true
-tracks/28/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Neck_019")
-tracks/28/interp = 0
-tracks/28/loop_wrap = true
-tracks/28/keys = PackedFloat32Array(0, 1, 0.31292, -0.00014069, 1.18556e-06)
-tracks/29/type = "rotation_3d"
-tracks/29/imported = true
-tracks/29/enabled = true
-tracks/29/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Neck_019")
-tracks/29/interp = 0
-tracks/29/loop_wrap = true
-tracks/29/keys = PackedFloat32Array(0, 1, -0.0042206, 1.98057e-05, -0.0781392, 0.996934)
-tracks/30/type = "position_3d"
-tracks/30/imported = true
-tracks/30/enabled = true
-tracks/30/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Clavicle_020")
-tracks/30/interp = 0
-tracks/30/loop_wrap = true
-tracks/30/keys = PackedFloat32Array(0, 1, 3.8298e-05, -0.000376253, 0.063188)
-tracks/31/type = "rotation_3d"
-tracks/31/imported = true
-tracks/31/enabled = true
-tracks/31/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Clavicle_020")
-tracks/31/interp = 0
-tracks/31/loop_wrap = true
-tracks/31/keys = PackedFloat32Array(0, 1, 0.494789, 0.483098, 0.638956, 0.33695)
-tracks/32/type = "rotation_3d"
-tracks/32/imported = true
-tracks/32/enabled = true
-tracks/32/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L UpperArm_021")
-tracks/32/interp = 0
-tracks/32/loop_wrap = true
-tracks/32/keys = PackedFloat32Array(0, 1, 0.711216, -0.20157, -0.0360202, 0.672491)
-tracks/33/type = "rotation_3d"
-tracks/33/imported = true
-tracks/33/enabled = true
-tracks/33/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Forearm_00")
-tracks/33/interp = 0
-tracks/33/loop_wrap = true
-tracks/33/keys = PackedFloat32Array(0, 1, 7.71975e-08, 1.29578e-06, -0.000155125, 1)
-tracks/34/type = "rotation_3d"
-tracks/34/imported = true
-tracks/34/enabled = true
-tracks/34/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Hand_022")
-tracks/34/interp = 0
-tracks/34/loop_wrap = true
-tracks/34/keys = PackedFloat32Array(0, 1, -0.948066, -0.317336, -0.0016605, 0.0215794)
-tracks/35/type = "position_3d"
-tracks/35/imported = true
-tracks/35/enabled = true
-tracks/35/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Neck1_023")
-tracks/35/interp = 1
-tracks/35/loop_wrap = true
-tracks/35/keys = PackedFloat32Array(0, 1, 0.178679, -0.000146062, 1.79309e-06)
-tracks/36/type = "rotation_3d"
-tracks/36/imported = true
-tracks/36/enabled = true
-tracks/36/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Neck1_023")
-tracks/36/interp = 1
-tracks/36/loop_wrap = true
-tracks/36/keys = PackedFloat32Array(0, 1, -0.00586298, -0.000568547, -0.209449, 0.977802, 0.0333333, 1, -0.00573411, -0.000554211, -0.207039, 0.978316, 0.0666667, 1, -0.00542438, -0.000519762, -0.201247, 0.979525, 0.1, 1, -0.00494564, -0.000466517, -0.192286, 0.981326, 0.133333, 1, -0.00430951, -0.000395776, -0.180367, 0.98359, 0.166667, 1, -0.00352746, -0.000308829, -0.165693, 0.986171, 0.2, 1, -0.00257476, -0.000202933, -0.147788, 0.989016, 0.233333, 1, -0.00151241, -8.48808e-05, -0.127784, 0.991801, 0.266667, 1, -0.000353754, 4.38348e-05, -0.10592, 0.994375, 0.3, 1, 0.000887216, 0.00018165, -0.0824484, 0.996595, 0.333333, 1, 0.00219586, 0.000326928, -0.0576375, 0.998335, 0.366667, 1, 0.00356462, 0.000478827, -0.0316206, 0.999493, 0.4, 1, 0.00495421, 0.00063298, -0.00513869, 0.999974, 0.466667, 1, 0.00772965, 0.000940693, 0.0479651, 0.998819, 0.5, 1, 0.00908283, 0.00109063, 0.0739594, 0.997219, 0.533333, 1, 0.0103694, 0.00123314, 0.0987384, 0.995059, 0.566667, 1, 0.0115831, 0.00136752, 0.12217, 0.992441, 0.6, 1, 0.0127105, 0.00149231, 0.143989, 0.989497, 0.633333, 1, 0.0137395, 0.00160617, 0.163945, 0.986373, 0.666667, 1, 0.0146583, 0.00170781, 0.181801, 0.983225, 0.7, 1, 0.0154098, 0.00179091, 0.196431, 0.980395, 0.733333, 1, 0.0160192, 0.00185829, 0.208311, 0.97793, 0.766667, 1, 0.0164767, 0.00190887, 0.217241, 0.975977, 0.8, 1, 0.0167722, 0.00194153, 0.223013, 0.974669, 0.833333, 1, 0.016895, 0.00195511, 0.225414, 0.974115, 3.75, 1, 0.016895, 0.00195511, 0.225414, 0.974115)
-tracks/37/type = "position_3d"
-tracks/37/imported = true
-tracks/37/enabled = true
-tracks/37/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Head_024")
-tracks/37/interp = 1
-tracks/37/loop_wrap = true
-tracks/37/keys = PackedFloat32Array(0, 1, 0.201408, 7.29931e-08, -3.34748e-08, 0.833333, 1, 0.201408, -2.21514e-08, -3.44062e-08, 0.866667, 1, 0.271379, 0.0362006, -0.0244162, 0.9, 1, 0.404324, 0.104982, -0.0708067, 0.933333, 1, 0.558261, 0.184623, -0.124522, 0.966667, 1, 0.691207, 0.253404, -0.170913, 1, 1, 0.761178, 0.289605, -0.195329, 1.03333, 1, 0.728006, 0.272443, -0.183754, 1.06667, 1, 0.657516, 0.235974, -0.159157, 1.1, 1, 0.562148, 0.186634, -0.125879, 1.16667, 1, 0.346534, 0.0750827, -0.0506408, 1.2, 1, 0.263605, 0.0321783, -0.0217032, 1.23333, 1, 0.217994, 0.00858087, -0.00578755, 1.26667, 1, 0.201408, -2.21514e-08, -3.44062e-08, 2.43333, 1, 0.201408, -2.21514e-08, -3.44062e-08, 2.46667, 1, 0.235972, 0.00631612, 0.00562441, 2.5, 1, 0.374224, 0.0315803, 0.0281218, 2.53333, 1, 0.630978, 0.0784996, 0.0699028, 2.56667, 1, 0.798856, 0.109178, 0.0972213, 2.6, 1, 0.848232, 0.118201, 0.105256, 2.63333, 1, 0.793918, 0.108275, 0.0964178, 2.66667, 1, 0.695167, 0.0902296, 0.0803482, 2.73333, 1, 0.438412, 0.0433102, 0.0385671, 2.76667, 1, 0.324848, 0.0225574, 0.020087, 2.8, 1, 0.240909, 0.00721833, 0.00642784, 2.83333, 1, 0.201408, -2.21514e-08, -3.44062e-08, 3.75, 1, 0.201408, -2.21514e-08, -3.44062e-08)
-tracks/38/type = "rotation_3d"
-tracks/38/imported = true
-tracks/38/enabled = true
-tracks/38/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Head_024")
-tracks/38/interp = 1
-tracks/38/loop_wrap = true
-tracks/38/keys = PackedFloat32Array(0, 1, -0.00607782, 0.025712, 0.00238833, 0.999648, 1.3, 1, -0.00664048, 0.0247512, 0.00240763, 0.999669, 1.33333, 1, -0.00746785, 0.0233383, 0.00243599, 0.999697, 1.36667, 1, -0.00879832, 0.021066, 0.00248162, 0.999736, 1.4, 1, -0.0104766, 0.0181995, 0.00253916, 0.999776, 1.43333, 1, -0.0124829, 0.014772, 0.00260789, 0.99981, 1.46667, 1, -0.0147976, 0.0108171, 0.00268713, 0.999828, 1.5, 1, -0.0174008, 0.00636823, 0.00277624, 0.999824, 1.53333, 1, -0.0203493, 0.00132815, 0.00287707, 0.999788, 1.56667, 1, -0.0235266, -0.00410451, 0.00298565, 0.99971, 1.6, 1, -0.0269126, -0.0098954, 0.00310125, 0.999584, 1.63333, 1, -0.0304868, -0.01601, 0.00322318, 0.999402, 1.66667, 1, -0.0342287, -0.0224136, 0.00335072, 0.999157, 1.7, 1, -0.038154, -0.029133, 0.00348436, 0.998841, 1.73333, 1, -0.0421851, -0.0360359, 0.00362148, 0.998453, 1.76667, 1, -0.0463012, -0.0430867, 0.00376135, 0.997991, 1.8, 1, -0.0504812, -0.0502495, 0.00390324, 0.997452, 1.93333, 1, -0.0673437, -0.0791701, 0.00447406, 0.994574, 1.96667, 1, -0.0714621, -0.0862399, 0.00461311, 0.993697, 2, 1, -0.0754989, -0.0931719, 0.00474926, 0.992772, 2.03333, 1, -0.0793877, -0.099852, 0.00488028, 0.991818, 2.06667, 1, -0.0831344, -0.10629, 0.00500636, 0.990841, 2.1, 1, -0.0867192, -0.112452, 0.00512687, 0.989853, 2.13333, 1, -0.0901226, -0.118304, 0.0052412, 0.988865, 2.16667, 1, -0.0933254, -0.123812, 0.00534872, 0.987893, 2.2, 1, -0.0962236, -0.128798, 0.00544592, 0.986976, 2.23333, 1, -0.098864, -0.133342, 0.00553439, 0.986111, 2.26667, 1, -0.101228, -0.137411, 0.00561356, 0.985312, 2.3, 1, -0.103297, -0.140973, 0.00568281, 0.984593, 2.33333, 1, -0.105053, -0.143996, 0.00574155, 0.98397, 2.36667, 1, -0.106355, -0.146237, 0.00578506, 0.983499, 2.4, 1, -0.107286, -0.147841, 0.00581621, 0.983158, 2.43333, 1, -0.10783, -0.148777, 0.00583436, 0.982957, 2.86667, 1, -0.107558, -0.14831, 0.00582529, 0.983057, 2.9, 1, -0.106403, -0.146321, 0.00578667, 0.983481, 2.93333, 1, -0.104616, -0.143243, 0.00572691, 0.984126, 2.96667, 1, -0.102239, -0.139151, 0.0056474, 0.984963, 3, 1, -0.0993152, -0.134118, 0.00554952, 0.98596, 3.03333, 1, -0.0957485, -0.127981, 0.00542999, 0.987129, 3.06667, 1, -0.0917636, -0.121126, 0.00529631, 0.988372, 3.1, 1, -0.0874035, -0.113628, 0.0051499, 0.989658, 3.13333, 1, -0.0827123, -0.105565, 0.00499217, 0.990954, 3.16667, 1, -0.0777342, -0.0970114, 0.00482459, 0.992231, 3.2, 1, -0.0724675, -0.0879661, 0.00464704, 0.993473, 3.23333, 1, -0.0670515, -0.0786688, 0.0044642, 0.994633, 3.33333, 1, -0.050381, -0.0500777, 0.00389983, 0.997466, 3.36667, 1, -0.0448898, -0.0406687, 0.00371341, 0.998157, 3.4, 1, -0.0395352, -0.0314979, 0.00353136, 0.998715, 3.43333, 1, -0.0343651, -0.022647, 0.00335536, 0.999147, 3.46667, 1, -0.0294272, -0.0141972, 0.00318705, 0.999461, 3.5, 1, -0.024769, -0.0062292, 0.00302809, 0.999669, 3.53333, 1, -0.0205777, 0.000937604, 0.00288489, 0.999784, 3.56667, 1, -0.0168052, 0.00738624, 0.00275588, 0.999828, 3.6, 1, -0.0134971, 0.0130391, 0.00264265, 0.99982, 3.63333, 1, -0.0106992, 0.0178192, 0.00254679, 0.999781, 3.66667, 1, -0.00845652, 0.0216498, 0.00246987, 0.999727, 3.7, 1, -0.00704449, 0.0240612, 0.00242148, 0.999683, 3.73333, 1, -0.00632328, 0.0252928, 0.00239674, 0.999657, 3.75, 1, -0.00607782, 0.025712, 0.00238832, 0.999648)
-tracks/39/type = "position_3d"
-tracks/39/imported = true
-tracks/39/enabled = true
-tracks/39/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 HeadNub_025")
-tracks/39/interp = 1
-tracks/39/loop_wrap = true
-tracks/39/keys = PackedFloat32Array(0, 1, 0.277677, 2.83117e-07, 1.8953e-07)
-tracks/40/type = "rotation_3d"
-tracks/40/imported = true
-tracks/40/enabled = true
-tracks/40/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 HeadNub_025")
-tracks/40/interp = 1
-tracks/40/loop_wrap = true
-tracks/40/keys = PackedFloat32Array(0, 1, 1.77735e-08, -1.03824e-07, 1.67638e-07, 1)
-tracks/41/type = "position_3d"
-tracks/41/imported = true
-tracks/41/enabled = true
-tracks/41/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail1_026")
-tracks/41/interp = 1
-tracks/41/loop_wrap = true
-tracks/41/keys = PackedFloat32Array(0, 1, 0.0536093, -0.0942325, 0.1277)
-tracks/42/type = "rotation_3d"
-tracks/42/imported = true
-tracks/42/enabled = true
-tracks/42/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail1_026")
-tracks/42/interp = 1
-tracks/42/loop_wrap = true
-tracks/42/keys = PackedFloat32Array(0, 1, 0.631146, -0.434047, 0.561361, 0.313261)
-tracks/43/type = "position_3d"
-tracks/43/imported = true
-tracks/43/enabled = true
-tracks/43/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail1Nub_027")
-tracks/43/interp = 1
-tracks/43/loop_wrap = true
-tracks/43/keys = PackedFloat32Array(0, 1, 0.178016, 1.13621e-07, -1.78814e-07)
-tracks/44/type = "rotation_3d"
-tracks/44/imported = true
-tracks/44/enabled = true
-tracks/44/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail1Nub_027")
-tracks/44/interp = 1
-tracks/44/loop_wrap = true
-tracks/44/keys = PackedFloat32Array(0, 1, -0.707388, -0.706825, -9.33774e-07, 1.02198e-06)
-tracks/45/type = "position_3d"
-tracks/45/imported = true
-tracks/45/enabled = true
-tracks/45/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail2_028")
-tracks/45/interp = 1
-tracks/45/loop_wrap = true
-tracks/45/keys = PackedFloat32Array(0, 1, 0.0534769, -0.094089, -0.130569)
-tracks/46/type = "rotation_3d"
-tracks/46/imported = true
-tracks/46/enabled = true
-tracks/46/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail2_028")
-tracks/46/interp = 1
-tracks/46/loop_wrap = true
-tracks/46/keys = PackedFloat32Array(0, 1, -0.631146, 0.434043, 0.561363, 0.313261)
-tracks/47/type = "position_3d"
-tracks/47/imported = true
-tracks/47/enabled = true
-tracks/47/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail2Nub_029")
-tracks/47/interp = 1
-tracks/47/loop_wrap = true
-tracks/47/keys = PackedFloat32Array(0, 1, 0.178016, -2.70084e-07, 1.08033e-07)
-tracks/48/type = "rotation_3d"
-tracks/48/imported = true
-tracks/48/enabled = true
-tracks/48/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail2Nub_029")
-tracks/48/interp = 1
-tracks/48/loop_wrap = true
-tracks/48/keys = PackedFloat32Array(0, 1, -0.707388, -0.706825, -1.09143e-06, 1.0832e-06)
-tracks/49/type = "position_3d"
-tracks/49/imported = true
-tracks/49/enabled = true
-tracks/49/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Clavicle_030")
-tracks/49/interp = 0
-tracks/49/loop_wrap = true
-tracks/49/keys = PackedFloat32Array(0, 1, -3.82043e-05, 0.000660932, -0.0631879)
-tracks/50/type = "rotation_3d"
-tracks/50/imported = true
-tracks/50/enabled = true
-tracks/50/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Clavicle_030")
-tracks/50/interp = 0
-tracks/50/loop_wrap = true
-tracks/50/keys = PackedFloat32Array(0, 1, -0.507852, -0.479198, 0.622194, 0.354019)
-tracks/51/type = "rotation_3d"
-tracks/51/imported = true
-tracks/51/enabled = true
-tracks/51/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R UpperArm_031")
-tracks/51/interp = 0
-tracks/51/loop_wrap = true
-tracks/51/keys = PackedFloat32Array(0, 1, -0.672615, 0.179861, -0.0605338, 0.715244)
-tracks/52/type = "rotation_3d"
-tracks/52/imported = true
-tracks/52/enabled = true
-tracks/52/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Forearm_032")
-tracks/52/interp = 0
-tracks/52/loop_wrap = true
-tracks/52/keys = PackedFloat32Array(0, 1, -6.78672e-08, -1.27616e-06, -0.0302783, 0.999542)
-tracks/53/type = "rotation_3d"
-tracks/53/imported = true
-tracks/53/enabled = true
-tracks/53/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Hand_033")
-tracks/53/interp = 0
-tracks/53/loop_wrap = true
-tracks/53/keys = PackedFloat32Array(0, 1, 0.949833, 0.311981, 0.00174588, 0.0219544)
-tracks/54/type = "position_3d"
-tracks/54/imported = true
-tracks/54/enabled = true
-tracks/54/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail_034")
-tracks/54/interp = 0
-tracks/54/loop_wrap = true
-tracks/54/keys = PackedFloat32Array(0, 1, -0.281144, -0.00623209, -0.0164068)
-tracks/55/type = "rotation_3d"
-tracks/55/imported = true
-tracks/55/enabled = true
-tracks/55/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail_034")
-tracks/55/interp = 0
-tracks/55/loop_wrap = true
-tracks/55/keys = PackedFloat32Array(0, 1, -0.00346642, -0.0359893, 0.741383, 0.670108)
-tracks/56/type = "position_3d"
-tracks/56/imported = true
-tracks/56/enabled = true
-tracks/56/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail1_035")
-tracks/56/interp = 0
-tracks/56/loop_wrap = true
-tracks/56/keys = PackedFloat32Array(0, 1, 0.159429, -0.000122237, 1.88693e-07)
-tracks/57/type = "rotation_3d"
-tracks/57/imported = true
-tracks/57/enabled = true
-tracks/57/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail1_035")
-tracks/57/interp = 0
-tracks/57/loop_wrap = true
-tracks/57/keys = PackedFloat32Array(0, 1, -0.00382989, -0.0243361, -0.13591, 0.990415)
-tracks/58/type = "position_3d"
-tracks/58/imported = true
-tracks/58/enabled = true
-tracks/58/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail2_036")
-tracks/58/interp = 0
-tracks/58/loop_wrap = true
-tracks/58/keys = PackedFloat32Array(0, 1, 0.159463, -0.000127121, 7.37429e-07)
-tracks/59/type = "rotation_3d"
-tracks/59/imported = true
-tracks/59/enabled = true
-tracks/59/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail2_036")
-tracks/59/interp = 0
-tracks/59/loop_wrap = true
-tracks/59/keys = PackedFloat32Array(0, 1, -0.00250546, -0.0247532, 0.000922626, 0.99969)
-tracks/60/type = "position_3d"
-tracks/60/imported = true
-tracks/60/enabled = true
-tracks/60/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail3_037")
-tracks/60/interp = 0
-tracks/60/loop_wrap = true
-tracks/60/keys = PackedFloat32Array(0, 1, 0.159457, -0.000126838, 1.76226e-06)
-tracks/61/type = "rotation_3d"
-tracks/61/imported = true
-tracks/61/enabled = true
-tracks/61/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail3_037")
-tracks/61/interp = 0
-tracks/61/loop_wrap = true
-tracks/61/keys = PackedFloat32Array(0, 1, -0.00692883, -0.0246757, -0.0238274, 0.999388)
-tracks/62/type = "position_3d"
-tracks/62/imported = true
-tracks/62/enabled = true
-tracks/62/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail4_038")
-tracks/62/interp = 0
-tracks/62/loop_wrap = true
-tracks/62/keys = PackedFloat32Array(0, 1, 0.159452, -0.000139834, 2.80778e-06)
-tracks/63/type = "rotation_3d"
-tracks/63/imported = true
-tracks/63/enabled = true
-tracks/63/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail4_038")
-tracks/63/interp = 0
-tracks/63/loop_wrap = true
-tracks/63/keys = PackedFloat32Array(0, 1, -0.0102162, -0.0244862, -0.0401372, 0.998842)
-tracks/64/type = "position_3d"
-tracks/64/imported = true
-tracks/64/enabled = true
-tracks/64/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 TailNub_039")
-tracks/64/interp = 0
-tracks/64/loop_wrap = true
-tracks/64/keys = PackedFloat32Array(0, 1, 0.176435, -6.3329e-08, -3.30717e-08)
-tracks/65/type = "rotation_3d"
-tracks/65/imported = true
-tracks/65/enabled = true
-tracks/65/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 TailNub_039")
-tracks/65/interp = 0
-tracks/65/loop_wrap = true
-tracks/65/keys = PackedFloat32Array(0, 1, -0.707388, -0.706825, -9.73737e-07, 9.95949e-07)
 
 [sub_resource type="Animation" id="Animation_xunfp"]
 resource_name = "Take 001"
@@ -3588,6 +3117,473 @@ tracks/65/interp = 0
 tracks/65/loop_wrap = true
 tracks/65/keys = PackedFloat32Array(0, 1, 0.488055, -0.511668, 0.488053, 0.511666)
 
+[sub_resource type="Animation" id="Animation_1wtdv"]
+resource_name = "eating"
+length = 3.75
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01_02")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 3.33285e-09, 1.01155, -0.640777)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = true
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01_02")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, -0.466832, -0.466831, -0.531101, 0.531101)
+tracks/2/type = "position_3d"
+tracks/2/imported = true
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Pelvis_03")
+tracks/2/interp = 0
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, -6.49048e-08, 4.93383e-13, -1.78809e-07)
+tracks/3/type = "rotation_3d"
+tracks/3/imported = true
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Pelvis_03")
+tracks/3/interp = 0
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, -0.525262, -0.473392, -0.525262, 0.473392)
+tracks/4/type = "position_3d"
+tracks/4/imported = true
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Spine_04")
+tracks/4/interp = 0
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0, 1, 0.0301988, 0.0957261, 0.0099709)
+tracks/5/type = "rotation_3d"
+tracks/5/imported = true
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Spine_04")
+tracks/5/interp = 0
+tracks/5/loop_wrap = true
+tracks/5/keys = PackedFloat32Array(0, 1, 0.0128067, -0.0193058, 0.745968, 0.665578)
+tracks/6/type = "position_3d"
+tracks/6/imported = true
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Thigh_05")
+tracks/6/interp = 0
+tracks/6/loop_wrap = true
+tracks/6/keys = PackedFloat32Array(0, 1, -0.0843066, 0.0389379, 0.166643)
+tracks/7/type = "rotation_3d"
+tracks/7/imported = true
+tracks/7/enabled = true
+tracks/7/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Thigh_05")
+tracks/7/interp = 0
+tracks/7/loop_wrap = true
+tracks/7/keys = PackedFloat32Array(0, 1, 0.838859, 0.543568, 0.024445, 0.0158661)
+tracks/8/type = "rotation_3d"
+tracks/8/imported = true
+tracks/8/enabled = true
+tracks/8/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Calf_06")
+tracks/8/interp = 0
+tracks/8/loop_wrap = true
+tracks/8/keys = PackedFloat32Array(0, 1, 6.50344e-09, 5.51768e-08, -0.280346, 0.959899)
+tracks/9/type = "rotation_3d"
+tracks/9/imported = true
+tracks/9/enabled = true
+tracks/9/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L HorseLink_07")
+tracks/9/interp = 0
+tracks/9/loop_wrap = true
+tracks/9/keys = PackedFloat32Array(0, 1, -1.68629e-08, 4.74602e-08, 0.0527138, 0.99861)
+tracks/10/type = "rotation_3d"
+tracks/10/imported = true
+tracks/10/enabled = true
+tracks/10/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Foot_08")
+tracks/10/interp = 0
+tracks/10/loop_wrap = true
+tracks/10/keys = PackedFloat32Array(0, 1, -1.16871e-08, -2.55213e-08, 0.0782382, 0.996935)
+tracks/11/type = "position_3d"
+tracks/11/imported = true
+tracks/11/enabled = true
+tracks/11/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Toe0_09")
+tracks/11/interp = 0
+tracks/11/loop_wrap = true
+tracks/11/keys = PackedFloat32Array(0, 1, 0.0831771, 0.107046, 5.19282e-08)
+tracks/12/type = "rotation_3d"
+tracks/12/imported = true
+tracks/12/enabled = true
+tracks/12/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Toe0_09")
+tracks/12/interp = 0
+tracks/12/loop_wrap = true
+tracks/12/keys = PackedFloat32Array(0, 1, 1.27186e-07, -1.81839e-07, 0.707107, 0.707107)
+tracks/13/type = "position_3d"
+tracks/13/imported = true
+tracks/13/enabled = true
+tracks/13/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Toe0Nub_010")
+tracks/13/interp = 0
+tracks/13/loop_wrap = true
+tracks/13/keys = PackedFloat32Array(0, 1, 0.0137052, -1.67823e-09, -2.00915e-08)
+tracks/14/type = "rotation_3d"
+tracks/14/imported = true
+tracks/14/enabled = true
+tracks/14/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Toe0Nub_010")
+tracks/14/interp = 0
+tracks/14/loop_wrap = true
+tracks/14/keys = PackedFloat32Array(0, 1, 5.74e-08, -4.51988e-10, -1, 7.57258e-09)
+tracks/15/type = "scale_3d"
+tracks/15/imported = true
+tracks/15/enabled = true
+tracks/15/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Toe0Nub_010")
+tracks/15/interp = 0
+tracks/15/loop_wrap = true
+tracks/15/keys = PackedFloat32Array(0, 1, -1, -1, -1)
+tracks/16/type = "position_3d"
+tracks/16/imported = true
+tracks/16/enabled = true
+tracks/16/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Thigh_011")
+tracks/16/interp = 0
+tracks/16/loop_wrap = true
+tracks/16/keys = PackedFloat32Array(0, 1, -0.0997384, 0.0429861, -0.177387)
+tracks/17/type = "rotation_3d"
+tracks/17/imported = true
+tracks/17/enabled = true
+tracks/17/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Thigh_011")
+tracks/17/interp = 0
+tracks/17/loop_wrap = true
+tracks/17/keys = PackedFloat32Array(0, 1, 0.838859, 0.543568, 0.024445, 0.0158661)
+tracks/18/type = "rotation_3d"
+tracks/18/imported = true
+tracks/18/enabled = true
+tracks/18/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Calf_012")
+tracks/18/interp = 0
+tracks/18/loop_wrap = true
+tracks/18/keys = PackedFloat32Array(0, 1, -5.25883e-09, -1.19111e-07, -0.280346, 0.959899)
+tracks/19/type = "rotation_3d"
+tracks/19/imported = true
+tracks/19/enabled = true
+tracks/19/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R HorseLink_013")
+tracks/19/interp = 0
+tracks/19/loop_wrap = true
+tracks/19/keys = PackedFloat32Array(0, 1, -1.32564e-08, 8.65735e-08, 0.0527131, 0.99861)
+tracks/20/type = "rotation_3d"
+tracks/20/imported = true
+tracks/20/enabled = true
+tracks/20/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Foot_014")
+tracks/20/interp = 0
+tracks/20/loop_wrap = true
+tracks/20/keys = PackedFloat32Array(0, 1, -4.91734e-08, 8.84262e-08, 0.0782374, 0.996935)
+tracks/21/type = "position_3d"
+tracks/21/imported = true
+tracks/21/enabled = true
+tracks/21/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Toe0_015")
+tracks/21/interp = 0
+tracks/21/loop_wrap = true
+tracks/21/keys = PackedFloat32Array(0, 1, 0.0831769, 0.107045, 2.20302e-08)
+tracks/22/type = "rotation_3d"
+tracks/22/imported = true
+tracks/22/enabled = true
+tracks/22/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Toe0_015")
+tracks/22/interp = 0
+tracks/22/loop_wrap = true
+tracks/22/keys = PackedFloat32Array(0, 1, 1.38037e-07, -1.88378e-07, 0.707107, 0.707107)
+tracks/23/type = "position_3d"
+tracks/23/imported = true
+tracks/23/enabled = true
+tracks/23/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Toe0Nub_016")
+tracks/23/interp = 0
+tracks/23/loop_wrap = true
+tracks/23/keys = PackedFloat32Array(0, 1, 0.0137054, -1.74687e-07, 5.03732e-09)
+tracks/24/type = "position_3d"
+tracks/24/imported = true
+tracks/24/enabled = true
+tracks/24/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Spine1_017")
+tracks/24/interp = 0
+tracks/24/loop_wrap = true
+tracks/24/keys = PackedFloat32Array(0, 1, 0.312942, -0.000249156, -1.47582e-08)
+tracks/25/type = "rotation_3d"
+tracks/25/imported = true
+tracks/25/enabled = true
+tracks/25/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Spine1_017")
+tracks/25/interp = 0
+tracks/25/loop_wrap = true
+tracks/25/keys = PackedFloat32Array(0, 1, -2.21741e-05, -0.0278534, -1.30069e-07, 0.999612)
+tracks/26/type = "position_3d"
+tracks/26/imported = true
+tracks/26/enabled = true
+tracks/26/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Spine2_018")
+tracks/26/interp = 0
+tracks/26/loop_wrap = true
+tracks/26/keys = PackedFloat32Array(0, 1, 0.31294, -0.000249168, -1.12003e-07)
+tracks/27/type = "rotation_3d"
+tracks/27/imported = true
+tracks/27/enabled = true
+tracks/27/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Spine2_018")
+tracks/27/interp = 0
+tracks/27/loop_wrap = true
+tracks/27/keys = PackedFloat32Array(0, 1, 0.000182926, -0.0278543, -0.00716236, 0.999586)
+tracks/28/type = "position_3d"
+tracks/28/imported = true
+tracks/28/enabled = true
+tracks/28/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Neck_019")
+tracks/28/interp = 0
+tracks/28/loop_wrap = true
+tracks/28/keys = PackedFloat32Array(0, 1, 0.31292, -0.00014069, 1.18556e-06)
+tracks/29/type = "rotation_3d"
+tracks/29/imported = true
+tracks/29/enabled = true
+tracks/29/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Neck_019")
+tracks/29/interp = 0
+tracks/29/loop_wrap = true
+tracks/29/keys = PackedFloat32Array(0, 1, -0.0042206, 1.98057e-05, -0.0781392, 0.996934)
+tracks/30/type = "position_3d"
+tracks/30/imported = true
+tracks/30/enabled = true
+tracks/30/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Clavicle_020")
+tracks/30/interp = 0
+tracks/30/loop_wrap = true
+tracks/30/keys = PackedFloat32Array(0, 1, 3.8298e-05, -0.000376253, 0.063188)
+tracks/31/type = "rotation_3d"
+tracks/31/imported = true
+tracks/31/enabled = true
+tracks/31/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Clavicle_020")
+tracks/31/interp = 0
+tracks/31/loop_wrap = true
+tracks/31/keys = PackedFloat32Array(0, 1, 0.494789, 0.483098, 0.638956, 0.33695)
+tracks/32/type = "rotation_3d"
+tracks/32/imported = true
+tracks/32/enabled = true
+tracks/32/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L UpperArm_021")
+tracks/32/interp = 0
+tracks/32/loop_wrap = true
+tracks/32/keys = PackedFloat32Array(0, 1, 0.711216, -0.20157, -0.0360202, 0.672491)
+tracks/33/type = "rotation_3d"
+tracks/33/imported = true
+tracks/33/enabled = true
+tracks/33/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Forearm_00")
+tracks/33/interp = 0
+tracks/33/loop_wrap = true
+tracks/33/keys = PackedFloat32Array(0, 1, 7.71975e-08, 1.29578e-06, -0.000155125, 1)
+tracks/34/type = "rotation_3d"
+tracks/34/imported = true
+tracks/34/enabled = true
+tracks/34/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 L Hand_022")
+tracks/34/interp = 0
+tracks/34/loop_wrap = true
+tracks/34/keys = PackedFloat32Array(0, 1, -0.948066, -0.317336, -0.0016605, 0.0215794)
+tracks/35/type = "position_3d"
+tracks/35/imported = true
+tracks/35/enabled = true
+tracks/35/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Neck1_023")
+tracks/35/interp = 1
+tracks/35/loop_wrap = true
+tracks/35/keys = PackedFloat32Array(0, 1, 0.178679, -0.000146062, 1.79309e-06)
+tracks/36/type = "rotation_3d"
+tracks/36/imported = true
+tracks/36/enabled = true
+tracks/36/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Neck1_023")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/keys = PackedFloat32Array(0, 1, -0.00586298, -0.000568547, -0.209449, 0.977802, 0.0333333, 1, -0.00573411, -0.000554211, -0.207039, 0.978316, 0.0666667, 1, -0.00542438, -0.000519762, -0.201247, 0.979525, 0.1, 1, -0.00494564, -0.000466517, -0.192286, 0.981326, 0.133333, 1, -0.00430951, -0.000395776, -0.180367, 0.98359, 0.166667, 1, -0.00352746, -0.000308829, -0.165693, 0.986171, 0.2, 1, -0.00257476, -0.000202933, -0.147788, 0.989016, 0.233333, 1, -0.00151241, -8.48808e-05, -0.127784, 0.991801, 0.266667, 1, -0.000353754, 4.38348e-05, -0.10592, 0.994375, 0.3, 1, 0.000887216, 0.00018165, -0.0824484, 0.996595, 0.333333, 1, 0.00219586, 0.000326928, -0.0576375, 0.998335, 0.366667, 1, 0.00356462, 0.000478827, -0.0316206, 0.999493, 0.4, 1, 0.00495421, 0.00063298, -0.00513869, 0.999974, 0.466667, 1, 0.00772965, 0.000940693, 0.0479651, 0.998819, 0.5, 1, 0.00908283, 0.00109063, 0.0739594, 0.997219, 0.533333, 1, 0.0103694, 0.00123314, 0.0987384, 0.995059, 0.566667, 1, 0.0115831, 0.00136752, 0.12217, 0.992441, 0.6, 1, 0.0127105, 0.00149231, 0.143989, 0.989497, 0.633333, 1, 0.0137395, 0.00160617, 0.163945, 0.986373, 0.666667, 1, 0.0146583, 0.00170781, 0.181801, 0.983225, 0.7, 1, 0.0154098, 0.00179091, 0.196431, 0.980395, 0.733333, 1, 0.0160192, 0.00185829, 0.208311, 0.97793, 0.766667, 1, 0.0164767, 0.00190887, 0.217241, 0.975977, 0.8, 1, 0.0167722, 0.00194153, 0.223013, 0.974669, 0.833333, 1, 0.016895, 0.00195511, 0.225414, 0.974115, 3.75, 1, 0.016895, 0.00195511, 0.225414, 0.974115)
+tracks/37/type = "position_3d"
+tracks/37/imported = true
+tracks/37/enabled = true
+tracks/37/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Head_024")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/keys = PackedFloat32Array(0, 1, 0.201408, 7.29931e-08, -3.34748e-08, 0.833333, 1, 0.201408, -2.21514e-08, -3.44062e-08, 0.866667, 1, 0.271379, 0.0362006, -0.0244162, 0.9, 1, 0.404324, 0.104982, -0.0708067, 0.933333, 1, 0.558261, 0.184623, -0.124522, 0.966667, 1, 0.691207, 0.253404, -0.170913, 1, 1, 0.761178, 0.289605, -0.195329, 1.03333, 1, 0.728006, 0.272443, -0.183754, 1.06667, 1, 0.657516, 0.235974, -0.159157, 1.1, 1, 0.562148, 0.186634, -0.125879, 1.16667, 1, 0.346534, 0.0750827, -0.0506408, 1.2, 1, 0.263605, 0.0321783, -0.0217032, 1.23333, 1, 0.217994, 0.00858087, -0.00578755, 1.26667, 1, 0.201408, -2.21514e-08, -3.44062e-08, 2.43333, 1, 0.201408, -2.21514e-08, -3.44062e-08, 2.46667, 1, 0.235972, 0.00631612, 0.00562441, 2.5, 1, 0.374224, 0.0315803, 0.0281218, 2.53333, 1, 0.630978, 0.0784996, 0.0699028, 2.56667, 1, 0.798856, 0.109178, 0.0972213, 2.6, 1, 0.848232, 0.118201, 0.105256, 2.63333, 1, 0.793918, 0.108275, 0.0964178, 2.66667, 1, 0.695167, 0.0902296, 0.0803482, 2.73333, 1, 0.438412, 0.0433102, 0.0385671, 2.76667, 1, 0.324848, 0.0225574, 0.020087, 2.8, 1, 0.240909, 0.00721833, 0.00642784, 2.83333, 1, 0.201408, -2.21514e-08, -3.44062e-08, 3.75, 1, 0.201408, -2.21514e-08, -3.44062e-08)
+tracks/38/type = "rotation_3d"
+tracks/38/imported = true
+tracks/38/enabled = true
+tracks/38/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Head_024")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/keys = PackedFloat32Array(0, 1, -0.00607782, 0.025712, 0.00238833, 0.999648, 1.3, 1, -0.00664048, 0.0247512, 0.00240763, 0.999669, 1.33333, 1, -0.00746785, 0.0233383, 0.00243599, 0.999697, 1.36667, 1, -0.00879832, 0.021066, 0.00248162, 0.999736, 1.4, 1, -0.0104766, 0.0181995, 0.00253916, 0.999776, 1.43333, 1, -0.0124829, 0.014772, 0.00260789, 0.99981, 1.46667, 1, -0.0147976, 0.0108171, 0.00268713, 0.999828, 1.5, 1, -0.0174008, 0.00636823, 0.00277624, 0.999824, 1.53333, 1, -0.0203493, 0.00132815, 0.00287707, 0.999788, 1.56667, 1, -0.0235266, -0.00410451, 0.00298565, 0.99971, 1.6, 1, -0.0269126, -0.0098954, 0.00310125, 0.999584, 1.63333, 1, -0.0304868, -0.01601, 0.00322318, 0.999402, 1.66667, 1, -0.0342287, -0.0224136, 0.00335072, 0.999157, 1.7, 1, -0.038154, -0.029133, 0.00348436, 0.998841, 1.73333, 1, -0.0421851, -0.0360359, 0.00362148, 0.998453, 1.76667, 1, -0.0463012, -0.0430867, 0.00376135, 0.997991, 1.8, 1, -0.0504812, -0.0502495, 0.00390324, 0.997452, 1.93333, 1, -0.0673437, -0.0791701, 0.00447406, 0.994574, 1.96667, 1, -0.0714621, -0.0862399, 0.00461311, 0.993697, 2, 1, -0.0754989, -0.0931719, 0.00474926, 0.992772, 2.03333, 1, -0.0793877, -0.099852, 0.00488028, 0.991818, 2.06667, 1, -0.0831344, -0.10629, 0.00500636, 0.990841, 2.1, 1, -0.0867192, -0.112452, 0.00512687, 0.989853, 2.13333, 1, -0.0901226, -0.118304, 0.0052412, 0.988865, 2.16667, 1, -0.0933254, -0.123812, 0.00534872, 0.987893, 2.2, 1, -0.0962236, -0.128798, 0.00544592, 0.986976, 2.23333, 1, -0.098864, -0.133342, 0.00553439, 0.986111, 2.26667, 1, -0.101228, -0.137411, 0.00561356, 0.985312, 2.3, 1, -0.103297, -0.140973, 0.00568281, 0.984593, 2.33333, 1, -0.105053, -0.143996, 0.00574155, 0.98397, 2.36667, 1, -0.106355, -0.146237, 0.00578506, 0.983499, 2.4, 1, -0.107286, -0.147841, 0.00581621, 0.983158, 2.43333, 1, -0.10783, -0.148777, 0.00583436, 0.982957, 2.86667, 1, -0.107558, -0.14831, 0.00582529, 0.983057, 2.9, 1, -0.106403, -0.146321, 0.00578667, 0.983481, 2.93333, 1, -0.104616, -0.143243, 0.00572691, 0.984126, 2.96667, 1, -0.102239, -0.139151, 0.0056474, 0.984963, 3, 1, -0.0993152, -0.134118, 0.00554952, 0.98596, 3.03333, 1, -0.0957485, -0.127981, 0.00542999, 0.987129, 3.06667, 1, -0.0917636, -0.121126, 0.00529631, 0.988372, 3.1, 1, -0.0874035, -0.113628, 0.0051499, 0.989658, 3.13333, 1, -0.0827123, -0.105565, 0.00499217, 0.990954, 3.16667, 1, -0.0777342, -0.0970114, 0.00482459, 0.992231, 3.2, 1, -0.0724675, -0.0879661, 0.00464704, 0.993473, 3.23333, 1, -0.0670515, -0.0786688, 0.0044642, 0.994633, 3.33333, 1, -0.050381, -0.0500777, 0.00389983, 0.997466, 3.36667, 1, -0.0448898, -0.0406687, 0.00371341, 0.998157, 3.4, 1, -0.0395352, -0.0314979, 0.00353136, 0.998715, 3.43333, 1, -0.0343651, -0.022647, 0.00335536, 0.999147, 3.46667, 1, -0.0294272, -0.0141972, 0.00318705, 0.999461, 3.5, 1, -0.024769, -0.0062292, 0.00302809, 0.999669, 3.53333, 1, -0.0205777, 0.000937604, 0.00288489, 0.999784, 3.56667, 1, -0.0168052, 0.00738624, 0.00275588, 0.999828, 3.6, 1, -0.0134971, 0.0130391, 0.00264265, 0.99982, 3.63333, 1, -0.0106992, 0.0178192, 0.00254679, 0.999781, 3.66667, 1, -0.00845652, 0.0216498, 0.00246987, 0.999727, 3.7, 1, -0.00704449, 0.0240612, 0.00242148, 0.999683, 3.73333, 1, -0.00632328, 0.0252928, 0.00239674, 0.999657, 3.75, 1, -0.00607782, 0.025712, 0.00238832, 0.999648)
+tracks/39/type = "position_3d"
+tracks/39/imported = true
+tracks/39/enabled = true
+tracks/39/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 HeadNub_025")
+tracks/39/interp = 1
+tracks/39/loop_wrap = true
+tracks/39/keys = PackedFloat32Array(0, 1, 0.277677, 2.83117e-07, 1.8953e-07)
+tracks/40/type = "rotation_3d"
+tracks/40/imported = true
+tracks/40/enabled = true
+tracks/40/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 HeadNub_025")
+tracks/40/interp = 1
+tracks/40/loop_wrap = true
+tracks/40/keys = PackedFloat32Array(0, 1, 1.77735e-08, -1.03824e-07, 1.67638e-07, 1)
+tracks/41/type = "position_3d"
+tracks/41/imported = true
+tracks/41/enabled = true
+tracks/41/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail1_026")
+tracks/41/interp = 1
+tracks/41/loop_wrap = true
+tracks/41/keys = PackedFloat32Array(0, 1, 0.0536093, -0.0942325, 0.1277)
+tracks/42/type = "rotation_3d"
+tracks/42/imported = true
+tracks/42/enabled = true
+tracks/42/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail1_026")
+tracks/42/interp = 1
+tracks/42/loop_wrap = true
+tracks/42/keys = PackedFloat32Array(0, 1, 0.631146, -0.434047, 0.561361, 0.313261)
+tracks/43/type = "position_3d"
+tracks/43/imported = true
+tracks/43/enabled = true
+tracks/43/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail1Nub_027")
+tracks/43/interp = 1
+tracks/43/loop_wrap = true
+tracks/43/keys = PackedFloat32Array(0, 1, 0.178016, 1.13621e-07, -1.78814e-07)
+tracks/44/type = "rotation_3d"
+tracks/44/imported = true
+tracks/44/enabled = true
+tracks/44/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail1Nub_027")
+tracks/44/interp = 1
+tracks/44/loop_wrap = true
+tracks/44/keys = PackedFloat32Array(0, 1, -0.707388, -0.706825, -9.33774e-07, 1.02198e-06)
+tracks/45/type = "position_3d"
+tracks/45/imported = true
+tracks/45/enabled = true
+tracks/45/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail2_028")
+tracks/45/interp = 1
+tracks/45/loop_wrap = true
+tracks/45/keys = PackedFloat32Array(0, 1, 0.0534769, -0.094089, -0.130569)
+tracks/46/type = "rotation_3d"
+tracks/46/imported = true
+tracks/46/enabled = true
+tracks/46/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail2_028")
+tracks/46/interp = 1
+tracks/46/loop_wrap = true
+tracks/46/keys = PackedFloat32Array(0, 1, -0.631146, 0.434043, 0.561363, 0.313261)
+tracks/47/type = "position_3d"
+tracks/47/imported = true
+tracks/47/enabled = true
+tracks/47/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail2Nub_029")
+tracks/47/interp = 1
+tracks/47/loop_wrap = true
+tracks/47/keys = PackedFloat32Array(0, 1, 0.178016, -2.70084e-07, 1.08033e-07)
+tracks/48/type = "rotation_3d"
+tracks/48/imported = true
+tracks/48/enabled = true
+tracks/48/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Ponytail2Nub_029")
+tracks/48/interp = 1
+tracks/48/loop_wrap = true
+tracks/48/keys = PackedFloat32Array(0, 1, -0.707388, -0.706825, -1.09143e-06, 1.0832e-06)
+tracks/49/type = "position_3d"
+tracks/49/imported = true
+tracks/49/enabled = true
+tracks/49/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Clavicle_030")
+tracks/49/interp = 0
+tracks/49/loop_wrap = true
+tracks/49/keys = PackedFloat32Array(0, 1, -3.82043e-05, 0.000660932, -0.0631879)
+tracks/50/type = "rotation_3d"
+tracks/50/imported = true
+tracks/50/enabled = true
+tracks/50/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Clavicle_030")
+tracks/50/interp = 0
+tracks/50/loop_wrap = true
+tracks/50/keys = PackedFloat32Array(0, 1, -0.507852, -0.479198, 0.622194, 0.354019)
+tracks/51/type = "rotation_3d"
+tracks/51/imported = true
+tracks/51/enabled = true
+tracks/51/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R UpperArm_031")
+tracks/51/interp = 0
+tracks/51/loop_wrap = true
+tracks/51/keys = PackedFloat32Array(0, 1, -0.672615, 0.179861, -0.0605338, 0.715244)
+tracks/52/type = "rotation_3d"
+tracks/52/imported = true
+tracks/52/enabled = true
+tracks/52/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Forearm_032")
+tracks/52/interp = 0
+tracks/52/loop_wrap = true
+tracks/52/keys = PackedFloat32Array(0, 1, -6.78672e-08, -1.27616e-06, -0.0302783, 0.999542)
+tracks/53/type = "rotation_3d"
+tracks/53/imported = true
+tracks/53/enabled = true
+tracks/53/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 R Hand_033")
+tracks/53/interp = 0
+tracks/53/loop_wrap = true
+tracks/53/keys = PackedFloat32Array(0, 1, 0.949833, 0.311981, 0.00174588, 0.0219544)
+tracks/54/type = "position_3d"
+tracks/54/imported = true
+tracks/54/enabled = true
+tracks/54/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail_034")
+tracks/54/interp = 0
+tracks/54/loop_wrap = true
+tracks/54/keys = PackedFloat32Array(0, 1, -0.281144, -0.00623209, -0.0164068)
+tracks/55/type = "rotation_3d"
+tracks/55/imported = true
+tracks/55/enabled = true
+tracks/55/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail_034")
+tracks/55/interp = 0
+tracks/55/loop_wrap = true
+tracks/55/keys = PackedFloat32Array(0, 1, -0.00346642, -0.0359893, 0.741383, 0.670108)
+tracks/56/type = "position_3d"
+tracks/56/imported = true
+tracks/56/enabled = true
+tracks/56/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail1_035")
+tracks/56/interp = 0
+tracks/56/loop_wrap = true
+tracks/56/keys = PackedFloat32Array(0, 1, 0.159429, -0.000122237, 1.88693e-07)
+tracks/57/type = "rotation_3d"
+tracks/57/imported = true
+tracks/57/enabled = true
+tracks/57/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail1_035")
+tracks/57/interp = 0
+tracks/57/loop_wrap = true
+tracks/57/keys = PackedFloat32Array(0, 1, -0.00382989, -0.0243361, -0.13591, 0.990415)
+tracks/58/type = "position_3d"
+tracks/58/imported = true
+tracks/58/enabled = true
+tracks/58/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail2_036")
+tracks/58/interp = 0
+tracks/58/loop_wrap = true
+tracks/58/keys = PackedFloat32Array(0, 1, 0.159463, -0.000127121, 7.37429e-07)
+tracks/59/type = "rotation_3d"
+tracks/59/imported = true
+tracks/59/enabled = true
+tracks/59/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail2_036")
+tracks/59/interp = 0
+tracks/59/loop_wrap = true
+tracks/59/keys = PackedFloat32Array(0, 1, -0.00250546, -0.0247532, 0.000922626, 0.99969)
+tracks/60/type = "position_3d"
+tracks/60/imported = true
+tracks/60/enabled = true
+tracks/60/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail3_037")
+tracks/60/interp = 0
+tracks/60/loop_wrap = true
+tracks/60/keys = PackedFloat32Array(0, 1, 0.159457, -0.000126838, 1.76226e-06)
+tracks/61/type = "rotation_3d"
+tracks/61/imported = true
+tracks/61/enabled = true
+tracks/61/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail3_037")
+tracks/61/interp = 0
+tracks/61/loop_wrap = true
+tracks/61/keys = PackedFloat32Array(0, 1, -0.00692883, -0.0246757, -0.0238274, 0.999388)
+tracks/62/type = "position_3d"
+tracks/62/imported = true
+tracks/62/enabled = true
+tracks/62/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail4_038")
+tracks/62/interp = 0
+tracks/62/loop_wrap = true
+tracks/62/keys = PackedFloat32Array(0, 1, 0.159452, -0.000139834, 2.80778e-06)
+tracks/63/type = "rotation_3d"
+tracks/63/imported = true
+tracks/63/enabled = true
+tracks/63/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 Tail4_038")
+tracks/63/interp = 0
+tracks/63/loop_wrap = true
+tracks/63/keys = PackedFloat32Array(0, 1, -0.0102162, -0.0244862, -0.0401372, 0.998842)
+tracks/64/type = "position_3d"
+tracks/64/imported = true
+tracks/64/enabled = true
+tracks/64/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 TailNub_039")
+tracks/64/interp = 0
+tracks/64/loop_wrap = true
+tracks/64/keys = PackedFloat32Array(0, 1, 0.176435, -6.3329e-08, -3.30717e-08)
+tracks/65/type = "rotation_3d"
+tracks/65/imported = true
+tracks/65/enabled = true
+tracks/65/path = NodePath("Sketchfab_model/Bull_3_fbx/Object_2/RootNode/Object_4/Skeleton3D:Bip01 TailNub_039")
+tracks/65/interp = 0
+tracks/65/loop_wrap = true
+tracks/65/keys = PackedFloat32Array(0, 1, -0.707388, -0.706825, -9.73737e-07, 9.95949e-07)
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wjewk"]
 _data = {
 &"Take 001": SubResource("Animation_xunfp"),
@@ -3597,6 +3593,24 @@ _data = {
 &"Take 001_4": SubResource("Animation_jva0e"),
 &"eating": SubResource("Animation_1wtdv")
 }
+
+[sub_resource type="GDScript" id="GDScript_jp8vd"]
+script/source = "extends Area3DInteraction
+
+
+func _on_activated() -> void:
+	print(\"I was activated\")
+	Global.has_meat = true
+	pass # Replace with function body.
+
+
+func _on_activated_toggled(value: Variant) -> void:
+	print(\"I was toggle activated?: \", str(value))
+	pass
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jdqtv"]
+size = Vector3(3.26764, 2.61035, 3.15405)
 
 [node name="scn_game" type="Node3D"]
 script = ExtResource("1_2kqm4")
@@ -4048,6 +4062,27 @@ visible = false
 [node name="Sketchfab_Scene8" parent="models" instance=ExtResource("12_art47")]
 transform = Transform3D(-1.99036e-10, 0, 0.00455341, 0, 0.00455341, 0, -0.00455341, 0, -1.99036e-10, -0.322861, 1.18198, 20.8393)
 
+[node name="Sketchfab_Scene41" parent="models" instance=ExtResource("12_art47")]
+transform = Transform3D(-1.99036e-10, 0, 0.00455341, 0, 0.00455341, 0, -0.00455341, 0, -1.99036e-10, 9.32253, 1.18198, 20.8393)
+
+[node name="Sketchfab_Scene46" parent="models" instance=ExtResource("12_art47")]
+transform = Transform3D(-1.99036e-10, 0, 0.00455341, 0, 0.00455341, 0, -0.00455341, 0, -1.99036e-10, 9.32253, 1.18198, 12.8393)
+
+[node name="Sketchfab_Scene47" parent="models" instance=ExtResource("12_art47")]
+transform = Transform3D(-1.99036e-10, 0, -0.00455341, 0, 0.00455341, 0, 0.00455341, 0, -1.99036e-10, 13.5445, 1.18198, 12.8393)
+
+[node name="Sketchfab_Scene42" parent="models" instance=ExtResource("12_art47")]
+transform = Transform3D(-0.00455341, 0, -3.98072e-10, 0, 0.00455341, 0, 3.98072e-10, 0, -0.00455341, 13.653, 1.18198, 20.8393)
+
+[node name="Sketchfab_Scene43" parent="models" instance=ExtResource("12_art47")]
+transform = Transform3D(-0.00528177, 0, -3.98072e-10, 0, 0.00455341, 0, 4.61747e-10, 0, -0.00455341, 18.9041, 1.18198, 20.8393)
+
+[node name="Sketchfab_Scene44" parent="models" instance=ExtResource("12_art47")]
+transform = Transform3D(6.92621e-10, 0, -0.00455341, 0, 0.00455341, 0, 0.00528177, 0, 5.97108e-10, 18.9041, 1.18198, 15.7002)
+
+[node name="Sketchfab_Scene45" parent="models" instance=ExtResource("12_art47")]
+transform = Transform3D(6.92621e-10, 0, -0.00455341, 0, 0.00455341, 0, 0.00528177, 0, 5.97108e-10, 18.9041, 1.18198, 10.0482)
+
 [node name="Sketchfab_Scene14" parent="models" instance=ExtResource("12_art47")]
 transform = Transform3D(0.00455341, 0, -2.77556e-17, 0, 0.00455341, 0, 2.77556e-17, 0, 0.00455341, -0.322861, 1.18198, -4.10443)
 
@@ -4183,7 +4218,7 @@ pitch_scale = 1.35
 panning_strength = 0.0
 
 [node name="pigman" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.74029, 26)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 16.0634, 0.190429, 16.5595)
 script = SubResource("GDScript_ih4yj")
 
 [node name="Sketchfab_Scene" parent="pigman" instance=ExtResource("33_ih4yj")]
@@ -4283,19 +4318,21 @@ bones/105/rotation = Quaternion(0.0298292, -1.49814e-09, 2.33215e-09, 0.999555)
 bones/106/rotation = Quaternion(0.0298292, -2.93634e-09, 2.37508e-09, 0.999555)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="pigman"]
-transform = Transform3D(1, 0, 0, 0, 0.311771, 0.950157, 0, -0.950157, 0.311771, 0, 3, 1)
+transform = Transform3D(1, 0, 0, 0, 0.311771, 0.950157, 0, -0.950157, 0.311771, 0, 2.5124, 1.01796)
 light_color = Color(0.871069, 0.632618, 0.774176, 1)
-light_energy = 4.0
+light_energy = 0.5
 light_volumetric_fog_energy = 6.224
 
-[node name="Area3D" type="Area3D" parent="pigman"]
+[node name="Area3DInteraction" type="Area3D" parent="pigman"]
+script = ExtResource("34_8re8r")
+metadata/_custom_type_script = "uid://8ml17likhn35"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="pigman/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0442505, 1.24213, 1.01196)
-shape = SubResource("BoxShape3D_ih4yj")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="pigman/Area3DInteraction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.243774, 1.27614, 0.82708)
+shape = SubResource("BoxShape3D_8re8r")
 
 [node name="Cow" type="Node3D" parent="."]
-transform = Transform3D(0.138257, 0, 0.990396, 0, 1, 0, -0.990396, 0, 0.138257, 0, 2.76516, 44.9139)
+transform = Transform3D(0.138257, 0, 0.990396, 0, 1, 0, -0.990396, 0, 0.138257, 39.5932, 2.76516, -44.0861)
 script = SubResource("GDScript_8re8r")
 
 [node name="cow" type="Node3D" parent="Cow"]
@@ -4621,12 +4658,114 @@ libraries = {
 &"": SubResource("AnimationLibrary_wjewk")
 }
 
+[node name="Area3DInteraction" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.375179, 3.30562, 25.3739)
+script = SubResource("GDScript_jp8vd")
+toggle_activation = true
+metadata/_custom_type_script = "uid://8ml17likhn35"
+
+[node name="Sketchfab_Scene" parent="Area3DInteraction" instance=ExtResource("35_we68e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.410411, -0.516104, 0.805296)
+
+[node name="Skeleton3D" parent="Area3DInteraction/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/BUG Armature_86/GLTF_created_0" index="0"]
+bones/1/position = Vector3(2.23517e-08, 4.10293, -3.37819)
+bones/1/rotation = Quaternion(0.22441, 8.56817e-08, 1.31316e-07, 0.974495)
+bones/2/rotation = Quaternion(0.263165, -2.44007e-07, -1.15484e-07, 0.964751)
+bones/3/rotation = Quaternion(0.257967, 0, -6.84522e-08, 0.966154)
+bones/4/rotation = Quaternion(0.365613, -1.15484e-07, -1.26776e-07, 0.930767)
+bones/5/rotation = Quaternion(-0.461681, 7.45058e-09, 2.42144e-07, 0.887046)
+bones/6/rotation = Quaternion(0.759848, -0.147437, 0.115728, 0.622496)
+bones/7/rotation = Quaternion(0.786348, 0.146478, -0.215605, 0.560103)
+bones/8/rotation = Quaternion(0.0238189, -0.0394602, -0.706131, 0.706579)
+bones/9/rotation = Quaternion(-0.206281, 0.00345204, 0.904092, 0.374238)
+bones/10/rotation = Quaternion(0.759847, 0.147437, -0.115728, 0.622496)
+bones/11/rotation = Quaternion(0.786348, -0.146478, 0.215605, 0.560103)
+bones/12/rotation = Quaternion(0.023819, 0.0394602, 0.706131, 0.70658)
+bones/13/rotation = Quaternion(-0.206281, -0.00345211, -0.904092, 0.374238)
+bones/14/rotation = Quaternion(0.564774, 0.604605, 0.410457, -0.383416)
+bones/15/rotation = Quaternion(-0.258944, -0.0555659, 0.249751, 0.931389)
+bones/16/rotation = Quaternion(3.10835e-08, -2.43657e-09, -0.69196, 0.721936)
+bones/17/rotation = Quaternion(-3.31097e-08, -3.57551e-08, 0.724673, 0.689093)
+bones/18/rotation = Quaternion(0.584768, 0.57254, 0.506702, -0.271105)
+bones/19/rotation = Quaternion(-0.0874099, 0.159188, 0.253012, 0.950265)
+bones/20/rotation = Quaternion(0.00420766, 0.00433321, -0.764932, 0.644083)
+bones/21/rotation = Quaternion(-0.201173, -0.231758, -0.105301, 0.945901)
+bones/22/rotation = Quaternion(-0.00848231, 0.000815339, 0.0731938, 0.997281)
+bones/23/rotation = Quaternion(-0.00898318, -0.00158384, -0.195175, 0.980726)
+bones/25/rotation = Quaternion(-0.258944, 0.0555658, -0.249752, 0.931389)
+bones/26/rotation = Quaternion(1.81673e-08, 2.81141e-08, 0.69196, 0.721936)
+bones/27/rotation = Quaternion(5.974e-09, 1.26368e-08, 0.724673, -0.689093)
+bones/28/rotation = Quaternion(0.584768, -0.572541, -0.506702, -0.271104)
+bones/29/rotation = Quaternion(-0.087058, -0.157976, -0.253794, 0.950291)
+bones/30/rotation = Quaternion(0.00420141, -0.00433398, 0.765711, 0.643157)
+bones/31/rotation = Quaternion(-0.201173, 0.231758, 0.105301, 0.945901)
+bones/32/rotation = Quaternion(-0.00848231, -0.000815317, -0.0731938, 0.997281)
+bones/33/rotation = Quaternion(-0.00898317, 0.00158385, 0.195175, 0.980726)
+bones/34/rotation = Quaternion(0.687133, 0.313879, 0.471098, -0.455407)
+bones/35/rotation = Quaternion(-0.130454, -0.0684129, -0.0493272, 0.98786)
+bones/37/rotation = Quaternion(0.812838, 0.154311, 0.104759, -0.551823)
+bones/38/rotation = Quaternion(-0.112171, -8.78018e-09, -9.17971e-09, 0.993689)
+bones/40/rotation = Quaternion(0.687133, -0.313879, -0.471098, -0.455406)
+bones/41/rotation = Quaternion(-0.130454, 0.0684129, 0.0493272, 0.98786)
+bones/43/rotation = Quaternion(0.812838, -0.154311, -0.104759, -0.551823)
+bones/44/rotation = Quaternion(-0.112171, -3.40696e-09, 5.20955e-09, 0.993689)
+bones/47/rotation = Quaternion(-0.0138151, -1.11759e-07, 5.58794e-09, 0.999905)
+bones/48/rotation = Quaternion(-1.23866e-07, 0, 6.51926e-09, 1)
+bones/49/rotation = Quaternion(-1.77203e-07, -2.83942e-08, 0.94525, -0.326347)
+bones/50/rotation = Quaternion(0.346346, -0.307654, -0.314354, 0.828598)
+bones/51/rotation = Quaternion(-0.319073, -6.53161e-05, -0.00975422, 0.94768)
+bones/52/rotation = Quaternion(0.365519, -0.00338485, -0.0102933, 0.930741)
+bones/53/rotation = Quaternion(0.71253, -0.000769362, -0.00652935, 0.701611)
+bones/55/rotation = Quaternion(-0.139491, 0.00404803, -0.0415769, 0.989342)
+bones/56/rotation = Quaternion(-0.204228, -0.0041563, 0.0204138, 0.978702)
+bones/58/rotation = Quaternion(0.00511489, -0.00295391, 0.0428047, 0.999066)
+bones/59/rotation = Quaternion(-0.13044, -0.0678641, -0.0135785, 0.989038)
+bones/62/rotation = Quaternion(0.558595, 0.530027, 0.14123, 0.622171)
+bones/63/rotation = Quaternion(-0.928563, -0.00738702, 0.00637016, 0.371046)
+bones/64/rotation = Quaternion(0.756897, 0.00778891, 0.0075327, 0.653444)
+bones/65/rotation = Quaternion(0.712554, 0.000769579, 0.00652933, 0.701587)
+bones/67/rotation = Quaternion(-0.139491, -0.00404801, 0.0415769, 0.989342)
+bones/68/rotation = Quaternion(-0.204228, 0.00415631, -0.0204138, 0.978702)
+bones/70/rotation = Quaternion(0.00511483, 0.0029539, -0.0428047, 0.999066)
+bones/71/rotation = Quaternion(-0.13044, 0.0678641, 0.0135785, 0.989038)
+bones/73/position = Vector3(3.25035, 4.02699, -1.68142)
+bones/73/rotation = Quaternion(0, 0.53039, 0.847754, 0)
+bones/74/position = Vector3(2.66966, 7.35442, -3.93265)
+bones/74/rotation = Quaternion(-0.53039, 0, 0, 0.847754)
+bones/75/position = Vector3(-3.25035, 4.02699, -1.68142)
+bones/75/rotation = Quaternion(0, 0.53039, 0.847754, 0)
+bones/76/position = Vector3(-2.66966, 7.35442, -3.93265)
+bones/76/rotation = Quaternion(-0.53039, 0, 0, 0.847754)
+bones/77/position = Vector3(1.64239, 4.1932, -2.2135)
+bones/77/rotation = Quaternion(0, 0.53039, 0.847754, 0)
+bones/78/position = Vector3(4.44714, 5.79508, -3.78575)
+bones/78/rotation = Quaternion(-0.53039, 0, 0, 0.847754)
+bones/79/position = Vector3(-1.64239, 4.19493, -2.20937)
+bones/79/rotation = Quaternion(0, 0.53039, 0.847754, 0)
+bones/80/position = Vector3(-4.44714, 5.79508, -3.78534)
+bones/80/rotation = Quaternion(-0.53039, 0, 0, 0.847754)
+bones/81/position = Vector3(0.908557, 0.951672, -1.28796)
+bones/81/rotation = Quaternion(-0.0155335, 0.530301, 0.847611, -0.0097184)
+bones/82/position = Vector3(0.499968, -0.987835, -2.02333)
+bones/82/rotation = Quaternion(-0.00693342, 0.847681, -0.530345, 0.0110838)
+bones/83/position = Vector3(-1.70271, 2.06372, -1.26119)
+bones/83/rotation = Quaternion(0.0155335, 0.530301, 0.847611, 0.0097184)
+bones/84/position = Vector3(-0.666146, 1.30289, -2.48312)
+bones/84/rotation = Quaternion(-0.00267746, 0.850022, -0.526251, -0.0227184)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3DInteraction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.469818, 0.805176, -0.00622559)
+shape = SubResource("BoxShape3D_jdqtv")
+
 [connection signal="start_game" from="Node3D" to="." method="_on_node_3d_start_game"]
 [connection signal="call_for_pizza" from="Phone" to="." method="_on_area_3d_call_for_pizza"]
-[connection signal="body_entered" from="pigman/Area3D" to="pigman" method="_on_area_3d_body_entered"]
-[connection signal="body_exited" from="pigman/Area3D" to="pigman" method="_on_area_3d_body_exited"]
+[connection signal="activated" from="pigman/Area3DInteraction" to="pigman" method="_on_area_3d_interaction_activated"]
+[connection signal="player_left_area" from="pigman/Area3DInteraction" to="pigman" method="_on_area_3d_interaction_player_left_area"]
+[connection signal="activated" from="Area3DInteraction" to="Area3DInteraction" method="_on_activated"]
+[connection signal="activated_toggled" from="Area3DInteraction" to="Area3DInteraction" method="_on_activated_toggled"]
 
 [editable path="Node3D/fridge"]
 [editable path="animated_van"]
 [editable path="animated_van/Sketchfab_model_001/Sketchfab_Scene"]
 [editable path="pigman/Sketchfab_Scene"]
+[editable path="Area3DInteraction/Sketchfab_Scene"]
