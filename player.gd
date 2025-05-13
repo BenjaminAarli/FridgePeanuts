@@ -35,8 +35,7 @@ func movement(delta):
 	move_and_slide()
 	pass
 
-
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		rotate_y(-event.relative.x / 100)
-		cam_pivot.rotate_x(-event.relative.y / 100)
+		rotate_y(-event.relative.x / 300)
+		cam_pivot.rotate_x(-event.relative.y / 300)

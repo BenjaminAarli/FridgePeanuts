@@ -1,0 +1,202 @@
+[gd_scene load_steps=5 format=3 uid="uid://gaqfda25iwxh"]
+
+[ext_resource type="Texture2D" uid="uid://b3vvgy7pvlbpx" path="res://data/images/grid.png" id="1_8qubv"]
+[ext_resource type="Script" uid="uid://dgb3vycvwl376" path="res://scn_roulette.gd" id="1_lwkfc"]
+[ext_resource type="Texture2D" uid="uid://cny3n0xeputl4" path="res://data/images/poop.png" id="3_pehho"]
+[ext_resource type="Texture2D" uid="uid://bsa647pjan7hs" path="res://data/images/arrow.png" id="4_fetbd"]
+
+[node name="roulette" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lwkfc")
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 448.0
+offset_top = 384.0
+offset_right = 1472.0
+offset_bottom = 512.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+scroll_horizontal_custom_step = 1.0
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+metadata/_edit_group_ = true
+
+[node name="Wheel" type="HBoxContainer" parent="Control/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Slot0" type="TextureRect" parent="Control/ScrollContainer/Wheel"]
+self_modulate = Color(1, 0, 1, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("1_8qubv")
+
+[node name="Slot10" type="TextureRect" parent="Control/ScrollContainer/Wheel/Slot0"]
+self_modulate = Color(1, 0, 1, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("3_pehho")
+expand_mode = 1
+
+[node name="Slot1" type="TextureRect" parent="Control/ScrollContainer/Wheel"]
+self_modulate = Color(0, 1, 1, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("1_8qubv")
+
+[node name="Slot11" type="TextureRect" parent="Control/ScrollContainer/Wheel/Slot1"]
+self_modulate = Color(0, 1, 1, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("3_pehho")
+expand_mode = 1
+
+[node name="Slot2" type="TextureRect" parent="Control/ScrollContainer/Wheel"]
+self_modulate = Color(1, 1, 0, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("1_8qubv")
+
+[node name="Slot10" type="TextureRect" parent="Control/ScrollContainer/Wheel/Slot2"]
+self_modulate = Color(1, 1, 0, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("3_pehho")
+expand_mode = 1
+
+[node name="Slot3" type="TextureRect" parent="Control/ScrollContainer/Wheel"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("1_8qubv")
+
+[node name="Slot10" type="TextureRect" parent="Control/ScrollContainer/Wheel/Slot3"]
+self_modulate = Color(0.276131, 0.276131, 4.81308e-08, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("3_pehho")
+expand_mode = 1
+
+[node name="Slot4" type="TextureRect" parent="Control/ScrollContainer/Wheel"]
+self_modulate = Color(0, 0, 1, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("1_8qubv")
+
+[node name="Slot10" type="TextureRect" parent="Control/ScrollContainer/Wheel/Slot4"]
+self_modulate = Color(0, 0, 1, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("3_pehho")
+expand_mode = 1
+
+[node name="Slot5" type="TextureRect" parent="Control/ScrollContainer/Wheel"]
+self_modulate = Color(1, 0, 0, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("1_8qubv")
+
+[node name="Slot10" type="TextureRect" parent="Control/ScrollContainer/Wheel/Slot5"]
+self_modulate = Color(1, 0, 0, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("3_pehho")
+expand_mode = 1
+
+[node name="Slot6" type="TextureRect" parent="Control/ScrollContainer/Wheel"]
+self_modulate = Color(0, 1, 0, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("1_8qubv")
+
+[node name="Slot10" type="TextureRect" parent="Control/ScrollContainer/Wheel/Slot6"]
+self_modulate = Color(0, 1, 0, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("3_pehho")
+expand_mode = 1
+
+[node name="Slot7" type="TextureRect" parent="Control/ScrollContainer/Wheel"]
+self_modulate = Color(0.407843, 0, 0.454902, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("1_8qubv")
+
+[node name="Slot10" type="TextureRect" parent="Control/ScrollContainer/Wheel/Slot7"]
+self_modulate = Color(0.407843, 0, 0.454902, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("3_pehho")
+expand_mode = 1
+
+[node name="Slot8" type="TextureRect" parent="Control/ScrollContainer/Wheel"]
+self_modulate = Color(0.921569, 1, 0.482353, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("1_8qubv")
+
+[node name="Slot10" type="TextureRect" parent="Control/ScrollContainer/Wheel/Slot8"]
+self_modulate = Color(0.921569, 1, 0.482353, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("3_pehho")
+expand_mode = 1
+
+[node name="Slot9" type="TextureRect" parent="Control/ScrollContainer/Wheel"]
+self_modulate = Color(0.588235, 0.27451, 0.27451, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("1_8qubv")
+
+[node name="Slot10" type="TextureRect" parent="Control/ScrollContainer/Wheel/Slot9"]
+self_modulate = Color(0.588235, 0.27451, 0.27451, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("3_pehho")
+expand_mode = 1
+
+[node name="Target" type="TextureRect" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 480.0
+offset_top = 144.0
+offset_right = 544.0
+offset_bottom = 208.0
+texture = ExtResource("4_fetbd")

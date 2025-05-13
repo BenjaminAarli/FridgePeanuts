@@ -1,4 +1,4 @@
-[gd_scene load_steps=175 format=4 uid="uid://c83apy1top3qa"]
+[gd_scene load_steps=181 format=4 uid="uid://c83apy1top3qa"]
 
 [ext_resource type="Script" uid="uid://dvcsadyhxblnv" path="res://scn_game.gd" id="1_2kqm4"]
 [ext_resource type="PackedScene" uid="uid://cudfd5mpxmb5j" path="res://data/models/european_delivery_van/animated_van.glb" id="2_3rm0j"]
@@ -36,6 +36,8 @@
 [ext_resource type="Texture2D" uid="uid://b34whn7n18j4j" path="res://data/models/cow_bull_01_baseColor.png" id="33_jp8vd"]
 [ext_resource type="Script" uid="uid://8ml17likhn35" path="res://data/nodes/PlayerInteractArea.gd" id="34_8re8r"]
 [ext_resource type="PackedScene" uid="uid://cbngwwhj4y4yr" path="res://data/models/insectoid_monster_rig/scene.gltf" id="35_we68e"]
+[ext_resource type="PackedScene" uid="uid://c6ug3vddwxwl5" path="res://data/models/outhouse.glb" id="37_jdqtv"]
+[ext_resource type="PackedScene" uid="uid://gaqfda25iwxh" path="res://scn_roulette.tscn" id="38_hkriv"]
 
 [sub_resource type="Environment" id="Environment_8h2c3"]
 fog_enabled = true
@@ -3654,6 +3656,37 @@ func _on_activated_toggled(value: Variant) -> void:
 [sub_resource type="BoxShape3D" id="BoxShape3D_jdqtv"]
 size = Vector3(3.26764, 2.61035, 3.15405)
 
+[sub_resource type="GDScript" id="GDScript_jdqtv"]
+script/source = "extends Node3D
+
+# OUTHOUSE ROULETTE
+
+@onready var ui = $Camera3D/roulette
+
+func _on_area_3d_interaction_activated() -> void:
+	$Label3D.hide()
+	ui.spin_again()
+	ui.show()
+	pass
+
+func _on_area_3d_interaction_player_left_area() -> void:
+	$Label3D.show()
+	ui.hide()
+	pass
+
+func _on_area_3d_interaction_player_entered_area() -> void:
+	$Label3D.show()
+	pass
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hkriv"]
+size = Vector3(1, 4.29974, 1.94849)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_137og"]
+size = Vector3(1, 4.29974, 0.250671)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u2pqs"]
+
 [node name="scn_game" type="Node3D"]
 script = ExtResource("1_2kqm4")
 dev_mode = true
@@ -4823,12 +4856,61 @@ bones/84/rotation = Quaternion(-0.00267746, 0.850022, -0.526251, -0.0227184)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.469818, 0.805176, -0.00622559)
 shape = SubResource("BoxShape3D_jdqtv")
 
+[node name="outhouse" parent="." instance=ExtResource("37_jdqtv")]
+transform = Transform3D(-3.17345e-08, 0, 0.726, 0, 0.726, 0, -0.726, 0, -3.17345e-08, -4.14881, 2.73396, 45.8812)
+script = SubResource("GDScript_jdqtv")
+
+[node name="Label3D" type="Label3D" parent="outhouse"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.23162, 0)
+visible = false
+billboard = 1
+text = "Check Inside 
+(E)"
+
+[node name="OmniLight3D" type="OmniLight3D" parent="outhouse"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0461044, 2.88252, -0.485539)
+light_color = Color(0.693931, 0.601979, 0.536522, 1)
+light_indirect_energy = 0.0
+shadow_enabled = true
+omni_attenuation = 0.543
+
+[node name="StaticBody3D" type="StaticBody3D" parent="outhouse"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="outhouse/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.19954, -0.0184321)
+shape = SubResource("BoxShape3D_hkriv")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="outhouse/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.505901, 2.19954, 0.986298)
+shape = SubResource("BoxShape3D_137og")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="outhouse/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.505901, 2.19954, -0.988911)
+shape = SubResource("BoxShape3D_137og")
+
+[node name="Area3DInteraction" type="Area3D" parent="outhouse"]
+script = ExtResource("34_8re8r")
+metadata/_custom_type_script = "uid://8ml17likhn35"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="outhouse/Area3DInteraction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.41372, 2.36657, 0)
+shape = SubResource("BoxShape3D_u2pqs")
+
+[node name="Camera3D" type="Camera3D" parent="outhouse"]
+transform = Transform3D(-5.34419e-08, -0.455231, 1.30001, -3.97976e-08, 1.30001, 0.455231, -1.37741, -1.98988e-08, -6.35919e-08, 1.38054, 2.84868, 0)
+
+[node name="roulette" parent="outhouse/Camera3D" instance=ExtResource("38_hkriv")]
+visible = false
+
 [connection signal="start_game" from="Node3D" to="." method="_on_node_3d_start_game"]
 [connection signal="call_for_pizza" from="Phone" to="." method="_on_area_3d_call_for_pizza"]
 [connection signal="activated" from="pigman/Area3DInteraction" to="pigman" method="_on_area_3d_interaction_activated"]
 [connection signal="player_left_area" from="pigman/Area3DInteraction" to="pigman" method="_on_area_3d_interaction_player_left_area"]
 [connection signal="activated" from="Area3DInteraction" to="Area3DInteraction" method="_on_activated"]
 [connection signal="activated_toggled" from="Area3DInteraction" to="Area3DInteraction" method="_on_activated_toggled"]
+[connection signal="activated" from="outhouse/Area3DInteraction" to="outhouse" method="_on_area_3d_interaction_activated"]
+[connection signal="player_entered_area" from="outhouse/Area3DInteraction" to="outhouse" method="_on_area_3d_interaction_player_entered_area"]
+[connection signal="player_left_area" from="outhouse/Area3DInteraction" to="outhouse" method="_on_area_3d_interaction_player_left_area"]
 
 [editable path="Node3D/fridge"]
 [editable path="animated_van"]
